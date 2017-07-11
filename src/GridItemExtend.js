@@ -405,7 +405,7 @@ export default class GridItemExtend extends React.Component {
                         </DropdownMenu>
                     }
                 </div>
-                {child.props.children}
+                {  React.cloneElement(child, {itemSize: `${this.props.w}x${this.props.h}`}) }
             </div>
         );
     }
