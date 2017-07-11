@@ -1,7 +1,7 @@
 {
-  "name": "module-startkit",
+  "name": "react-grid-system",
   "version": "0.0.1",
-  "description": "module start kit",
+  "description": "react-grid-system",
   "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tzelon/module-startkit.git"
+    "url": "git+https://github.com/Tzelon/react-grid-system.git"
   },
   "keywords": [
     "kit"
@@ -20,9 +20,9 @@
   "author": "Tzelon Machluf",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Tzelon/module-startkit/issues"
+    "url": "https://github.com/Tzelon/react-grid-system/issues"
   },
-  "homepage": "https://github.com/Tzelon/module-startkit#readme",
+  "homepage": "https://github.com/Tzelon/react-grid-system#readme",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
