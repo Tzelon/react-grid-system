@@ -220,7 +220,6 @@ export default class GridItemExtend extends React.Component {
    */
   createStyle(pos: Position): { [key: string]: ?string } {
     const { usePercentages, containerWidth, useCSSTransforms } = this.props;
-
     let style;
     // CSS Transforms support (default)
     if (useCSSTransforms) {
@@ -411,7 +410,7 @@ export default class GridItemExtend extends React.Component {
           </DropdownMenu>
           }
         </div>
-        {child.props.children}
+        {child}
       </div>
     );
   }
@@ -419,7 +418,15 @@ export default class GridItemExtend extends React.Component {
   render(): React.Element<any> {
     const { x, y, w, h, isDraggable, isResizable, useCSSTransforms } = this.props;
     const pos = this.calcPosition(x, y, w, h, this.state);
-    let child = React.Children.only(this.props.children);
+    let child = (
+      //Wrapping the supply component with div and passing new props
+      <div key={this.props.children.key} >
+        {React.cloneElement(React.Children.only(this.props.children), {
+            itemSize: `${this.props.w}x${this.props.h}`,
+          },
+        )}
+      </div>
+    );
 
     if (this.state.editable) child = this.mixinHeader(child);
 
@@ -437,7 +444,6 @@ export default class GridItemExtend extends React.Component {
       onMouseEnter: this.onMouseEnterHandler.bind(this),
       onMouseLeave: this.onMouseLeaveHandler.bind(this),
       onClick: this.onClickHandler.bind(this),
-      itemSize: `${this.props.w}x${this.props.h}`,
     });
 
     // Resizable support. This is usually on but the user can toggle it off.

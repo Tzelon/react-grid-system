@@ -85,11 +85,11 @@
 }
 
 .react-grid-item > .react-editable {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row-reverse;
-  right: 1px;
-  top: -25px;
+  right: -1px;
+  top: -27px;
   background: red;
   height: 25px;
   width: 100%;

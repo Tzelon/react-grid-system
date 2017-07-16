@@ -2,6 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ReactGridLayout, { Responsive, WidthProvider } from 'react-grid-system';
+const Demo = (props) => {
+  console.log(props);
+  return (
+    <div>
+      Hello Im Demoe
+    </div>
+  );
+
+};
 
 export  default class ShowcaseLayout extends React.Component {
 
@@ -53,7 +62,10 @@ export  default class ShowcaseLayout extends React.Component {
 
   onNewLayout = () => {
     this.setState({
-      layout: generateLayout(),
+      layout: [
+        { i: 'a', x: 0, y: 0, w: 1, h: 2, itemSizes: [[1, 1], [2, 2], [3, 4]] },
+        { i: 'b', x: 1, y: 0, w: 3, h: 2, itemSizes: [[1, 1], [4, 4]] },
+      ],
     });
   };
 
@@ -66,7 +78,10 @@ export  default class ShowcaseLayout extends React.Component {
         <button onClick={this.onNewLayout} >Generate New Layout</button>
         <ReactGridLayout
           {...this.props}
-          layout={this.state.layout}
+          layout={[
+            { i: 'a', x: 0, y: 0, w: 1, h: 2, itemSizes: [[1, 1], [2, 2], [3, 4]] },
+            { i: 'b', x: 1, y: 0, w: 3, h: 2, itemSizes: [[1, 1], [4, 4]] },
+          ]}
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
           // WidthProvider option
@@ -77,11 +92,12 @@ export  default class ShowcaseLayout extends React.Component {
           verticalCompact={false}
           margin={[5, 5]}
           rowHeight={85}
-          isResizable={true}
+          isResizable={false}
           width={2705}
           cols={30}
         >
-          {this.generateDOM()}
+          <Demo key={'a'} />
+          <Demo key={'b'} />
         </ReactGridLayout >
       </div>
     );
