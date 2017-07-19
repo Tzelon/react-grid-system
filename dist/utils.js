@@ -371,7 +371,6 @@ export function synchronizeLayoutWithChildren(initialLayout, children, cols, ver
     var exists = getLayoutItem(initialLayout, child.key || "1" /* FIXME satisfies Flow */);
     if (exists) {
       layout[i] = cloneLayoutItem(exists);
-      debugger;
     } else {
       if (!isProduction && child.props._grid) {
         console.warn('`_grid` properties on children have been deprecated as of React 15.2. ' + // eslint-disable-line

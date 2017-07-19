@@ -161,55 +161,6 @@ var ResponsiveReactGridLayout = function (_React$Component) {
   return ResponsiveReactGridLayout;
 }(React.Component);
 
-ResponsiveReactGridLayout.propTypes = {
-
-  //
-  // Basic props
-  //
-
-  // Optional, but if you are managing width yourself you may want to set the breakpoint
-  // yourself as well.
-  breakpoint: PropTypes.string,
-
-  // {name: pxVal}, e.g. {lg: 1200, md: 996, sm: 768, xs: 480}
-  breakpoints: PropTypes.object,
-
-  // # of cols. This is a breakpoint -> cols map
-  cols: PropTypes.object,
-
-  // layouts is an object mapping breakpoints to layouts.
-  // e.g. {lg: Layout, md: Layout, ...}
-  layouts: function layouts(props, propName) {
-    if (type(props[propName]) !== '[object Object]') {
-      throw new Error('Layout property must be an object. Received: ' + type(props[propName]));
-    }
-    Object.keys(props[propName]).forEach(function (key) {
-      if (!(key in props.breakpoints)) {
-        throw new Error('Each key in layouts must align with a key in breakpoints.');
-      }
-      validateLayout(props.layouts[key], 'layouts.' + key);
-    });
-  },
-
-
-  // The width of this component.
-  // Required in this propTypes stanza because generateInitialState() will fail without it.
-  width: PropTypes.number.isRequired,
-
-  //
-  // Callbacks
-  //
-
-  // Calls back with breakpoint and new # cols
-  onBreakpointChange: PropTypes.func,
-
-  // Callback so you can save the layout.
-  // Calls back with (currentLayout, allLayouts). allLayouts are keyed by breakpoint.
-  onLayoutChange: PropTypes.func,
-
-  // Calls back with (containerWidth, margin, cols, containerPadding)
-  onWidthChange: PropTypes.func
-};
 ResponsiveReactGridLayout.defaultProps = {
   breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
   cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },

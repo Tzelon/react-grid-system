@@ -1,5 +1,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18,6 +20,8 @@ var noop = function noop() {};
 
 // Types
 
+var _ref7 = _jsx('div', {});
+
 // End Types
 
 /**
@@ -27,17 +31,25 @@ var noop = function noop() {};
 var ReactGridLayout = function (_React$Component) {
   _inherits(ReactGridLayout, _React$Component);
 
-  // TODO publish internal ReactClass displayName transform
   function ReactGridLayout(props, context) {
     _classCallCheck(this, ReactGridLayout);
 
     var _this = _possibleConstructorReturn(this, (ReactGridLayout.__proto__ || Object.getPrototypeOf(ReactGridLayout)).call(this, props, context));
 
-    _initialiseProps.call(_this);
+    _this.state = {
+      activeDrag: null,
+      layout: synchronizeLayoutWithChildren(_this.props.layout, _this.props.children, _this.props.cols, _this.props.verticalCompact),
+      mounted: false,
+      oldDragItem: null,
+      oldLayout: null,
+      oldResizeItem: null
+    };
 
     autoBindHandlers(_this, ['onDragStart', 'onDrag', 'onDragStop', 'onResizeStart', 'onResize', 'onResizeStop']);
     return _this;
   }
+  // TODO publish internal ReactClass displayName transform
+
 
   _createClass(ReactGridLayout, [{
     key: 'componentDidMount',
@@ -286,26 +298,23 @@ var ReactGridLayout = function (_React$Component) {
 
       // {...this.state.activeDrag} is pretty slow, actually
 
-      return React.createElement(
-        GridItem,
-        {
-          w: activeDrag.w,
-          h: activeDrag.h,
-          x: activeDrag.x,
-          y: activeDrag.y,
-          i: activeDrag.i,
-          className: 'react-grid-placeholder',
-          containerWidth: width,
-          cols: cols,
-          margin: margin,
-          containerPadding: containerPadding || margin,
-          maxRows: maxRows,
-          rowHeight: rowHeight,
-          isDraggable: false,
-          isResizable: false,
-          useCSSTransforms: useCSSTransforms },
-        React.createElement('div', null)
-      );
+      return _jsx(GridItem, {
+        w: activeDrag.w,
+        h: activeDrag.h,
+        x: activeDrag.x,
+        y: activeDrag.y,
+        i: activeDrag.i,
+        className: 'react-grid-placeholder',
+        containerWidth: width,
+        cols: cols,
+        margin: margin,
+        containerPadding: containerPadding || margin,
+        maxRows: maxRows,
+        rowHeight: rowHeight,
+        isDraggable: false,
+        isResizable: false,
+        useCSSTransforms: useCSSTransforms
+      }, void 0, _ref7);
     }
 
     /**
@@ -339,42 +348,37 @@ var ReactGridLayout = function (_React$Component) {
       var draggable = Boolean(!l.static && isDraggable && (l.isDraggable || l.isDraggable == null));
       var resizable = Boolean(!l.static && isResizable && (l.isResizable || l.isResizable == null));
 
-      return React.createElement(
-        GridItem,
-        {
-          containerWidth: width,
-          cols: cols,
-          margin: margin,
-          containerPadding: containerPadding || margin,
-          maxRows: maxRows,
-          rowHeight: rowHeight,
-          cancel: draggableCancel,
-          handle: draggableHandle,
-          onDragStop: this.onDragStop,
-          onDragStart: this.onDragStart,
-          onDrag: this.onDrag,
-          onResizeStart: this.onResizeStart,
-          onResize: this.onResize,
-          onResizeStop: this.onResizeStop,
-          isDraggable: draggable,
-          isResizable: resizable,
-          useCSSTransforms: useCSSTransforms && mounted,
-          usePercentages: !mounted,
-
-          w: l.w,
-          h: l.h,
-          x: l.x,
-          y: l.y,
-          i: l.i,
-          minH: l.minH,
-          minW: l.minW,
-          maxH: l.maxH,
-          maxW: l.maxW,
-          'static': l.static,
-          itemSizes: l.itemSizes
-        },
-        child
-      );
+      return _jsx(GridItem, {
+        containerWidth: width,
+        cols: cols,
+        margin: margin,
+        containerPadding: containerPadding || margin,
+        maxRows: maxRows,
+        rowHeight: rowHeight,
+        cancel: draggableCancel,
+        handle: draggableHandle,
+        onDragStop: this.onDragStop,
+        onDragStart: this.onDragStart,
+        onDrag: this.onDrag,
+        onResizeStart: this.onResizeStart,
+        onResize: this.onResize,
+        onResizeStop: this.onResizeStop,
+        isDraggable: draggable,
+        isResizable: resizable,
+        useCSSTransforms: useCSSTransforms && mounted,
+        usePercentages: !mounted,
+        w: l.w,
+        h: l.h,
+        x: l.x,
+        y: l.y,
+        i: l.i,
+        minH: l.minH,
+        minW: l.minW,
+        maxH: l.maxH,
+        maxW: l.maxW,
+        'static': l.static,
+        itemSizes: l.itemSizes
+      }, void 0, child);
     }
   }, {
     key: 'render',
@@ -390,14 +394,12 @@ var ReactGridLayout = function (_React$Component) {
         height: this.containerHeight()
       }, style);
 
-      return React.createElement(
-        'div',
-        { className: classNames('react-grid-layout', className), style: mergedStyle },
-        React.Children.map(this.props.children, function (child) {
-          return _this2.processGridItem(child);
-        }),
-        this.placeholder()
-      );
+      return _jsx('div', {
+        className: classNames('react-grid-layout', className),
+        style: mergedStyle
+      }, void 0, React.Children.map(this.props.children, function (child) {
+        return _this2.processGridItem(child);
+      }), this.placeholder());
     }
   }]);
 
@@ -405,104 +407,6 @@ var ReactGridLayout = function (_React$Component) {
 }(React.Component);
 
 ReactGridLayout.displayName = "ReactGridLayout";
-ReactGridLayout.propTypes = {
-  //
-  // Basic props
-  //
-  className: PropTypes.string,
-  style: PropTypes.object,
-
-  // This can be set explicitly. If it is not set, it will automatically
-  // be set to the container width. Note that resizes will *not* cause this to adjust.
-  // If you need that behavior, use WidthProvider.
-  width: PropTypes.number,
-
-  // If true, the container height swells and contracts to fit contents
-  autoSize: PropTypes.bool,
-  // # of cols.
-  cols: PropTypes.number,
-
-  // A selector that will not be draggable.
-  draggableCancel: PropTypes.string,
-  // A selector for the draggable handler
-  draggableHandle: PropTypes.string,
-
-  // If true, the layout will compact vertically
-  verticalCompact: PropTypes.bool,
-
-  // layout is an array of object with the format:
-  // {x: Number, y: Number, w: Number, h: Number, i: String}
-  layout: function layout(props) {
-    var layout = props.layout;
-    // I hope you're setting the data-grid property on the grid items
-    if (layout === undefined) return;
-    validateLayout(layout, 'layout');
-  },
-
-  //
-  // Grid Dimensions
-  //
-
-  // Margin between items [x, y] in px
-  margin: PropTypes.arrayOf(PropTypes.number),
-  // Padding inside the container [x, y] in px
-  containerPadding: PropTypes.arrayOf(PropTypes.number),
-  // Rows have a static height, but you can change this based on breakpoints if you like
-  rowHeight: PropTypes.number,
-  // Default Infinity, but you can specify a max here if you like.
-  // Note that this isn't fully fleshed out and won't error if you specify a layout that
-  // extends beyond the row capacity. It will, however, not allow users to drag/resize
-  // an item past the barrier. They can push items beyond the barrier, though.
-  // Intentionally not documented for this reason.
-  maxRows: PropTypes.number,
-
-  //
-  // Flags
-  //
-  isDraggable: PropTypes.bool,
-  isResizable: PropTypes.bool,
-  // Use CSS transforms instead of top/left
-  useCSSTransforms: PropTypes.bool,
-
-  //
-  // Callbacks
-  //
-
-  // Callback so you can save the layout. Calls after each drag & resize stops.
-  onLayoutChange: PropTypes.func,
-
-  // Calls when drag starts. Callback is of the signature (layout, oldItem, newItem, placeholder, e).
-  // All callbacks below have the same signature. 'start' and 'stop' callbacks omit the 'placeholder'.
-  onDragStart: PropTypes.func,
-  // Calls on each drag movement.
-  onDrag: PropTypes.func,
-  // Calls when drag is complete.
-  onDragStop: PropTypes.func,
-  //Calls when resize starts.
-  onResizeStart: PropTypes.func,
-  // Calls when resize movement happens.
-  onResize: PropTypes.func,
-  // Calls when resize is complete.
-  onResizeStop: PropTypes.func,
-
-  //
-  // Other validations
-  //
-
-  // Children must not have duplicate keys.
-  children: function children(props, propName, _componentName) {
-    var children = props[propName];
-
-    // Check children keys for duplicates. Throw if found.
-    var keys = {};
-    React.Children.forEach(children, function (child) {
-      if (keys[child.key]) {
-        throw new Error("Duplicate child key found! This will cause problems in ReactGridLayout.");
-      }
-      keys[child.key] = true;
-    });
-  }
-};
 ReactGridLayout.defaultProps = {
   autoSize: true,
   cols: 12,
@@ -523,16 +427,4 @@ ReactGridLayout.defaultProps = {
   onResize: noop,
   onResizeStop: noop
 };
-
-var _initialiseProps = function _initialiseProps() {
-  this.state = {
-    activeDrag: null,
-    layout: synchronizeLayoutWithChildren(this.props.layout, this.props.children, this.props.cols, this.props.verticalCompact),
-    mounted: false,
-    oldDragItem: null,
-    oldLayout: null,
-    oldResizeItem: null
-  };
-};
-
 export default ReactGridLayout;

@@ -1,3 +1,5 @@
+var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _templateObject = _taggedTemplateLiteral(['\n  & {\n    cursor: pointer;\n    position: relative;\n  }\n'], ['\n  & {\n    cursor: pointer;\n    position: relative;\n  }\n']),
@@ -28,6 +30,10 @@ export var ListItem = styled('li')(_templateObject2);
 var ListContainer = styled('ul')(_templateObject3, function (props) {
     return props.show && css(_templateObject4);
 });
+
+var _ref3 = _jsx('handler', {});
+
+var _ref4 = _jsx(DotsHorizontal, {});
 
 var DropdownMenu = function (_Component) {
     _inherits(DropdownMenu, _Component);
@@ -66,22 +72,18 @@ var DropdownMenu = function (_Component) {
                 handler = _props.handler,
                 children = _props.children;
 
-            return React.createElement(
-                Container,
-                { className: className, onClick: this.onToggleShow },
-                handler ? React.createElement('handler', null) : React.createElement(DotsHorizontal, null),
-                React.createElement(
-                    ListContainer,
-                    { show: this.state.isOpen },
-                    React.Children.map(children, function (child) {
-                        return React.cloneElement(child, {
-                            onClick: function onClick() {
-                                return _this2.handleChange(child);
-                            }
-                        });
-                    })
-                )
-            );
+            return _jsx(Container, {
+                className: className,
+                onClick: this.onToggleShow
+            }, void 0, handler ? _ref3 : _ref4, _jsx(ListContainer, {
+                show: this.state.isOpen
+            }, void 0, React.Children.map(children, function (child) {
+                return React.cloneElement(child, {
+                    onClick: function onClick() {
+                        return _this2.handleChange(child);
+                    }
+                });
+            })));
         }
     }]);
 

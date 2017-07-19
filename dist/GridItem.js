@@ -1,5 +1,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -216,16 +218,13 @@ var GridItem = function (_React$Component) {
   }, {
     key: 'mixinDraggable',
     value: function mixinDraggable(child) {
-      return React.createElement(
-        DraggableCore,
-        {
-          onStart: this.onDragHandler('onDragStart'),
-          onDrag: this.onDragHandler('onDrag'),
-          onStop: this.onDragHandler('onDragStop'),
-          handle: this.props.handle,
-          cancel: ".react-resizable-handle" + (this.props.cancel ? "," + this.props.cancel : "") },
-        child
-      );
+      return _jsx(DraggableCore, {
+        onStart: this.onDragHandler('onDragStart'),
+        onDrag: this.onDragHandler('onDrag'),
+        onStop: this.onDragHandler('onDragStop'),
+        handle: this.props.handle,
+        cancel: ".react-resizable-handle" + (this.props.cancel ? "," + this.props.cancel : "")
+      }, void 0, child);
     }
 
     /**
@@ -255,18 +254,15 @@ var GridItem = function (_React$Component) {
       var maxes = this.calcPosition(0, 0, maxW, maxH);
       var minConstraints = [mins.width, mins.height];
       var maxConstraints = [Math.min(maxes.width, maxWidth), Math.min(maxes.height, Infinity)];
-      return React.createElement(
-        Resizable,
-        {
-          width: position.width,
-          height: position.height,
-          minConstraints: minConstraints,
-          maxConstraints: maxConstraints,
-          onResizeStop: this.onResizeHandler('onResizeStop'),
-          onResizeStart: this.onResizeHandler('onResizeStart'),
-          onResize: this.onResizeHandler('onResize') },
-        child
-      );
+      return _jsx(Resizable, {
+        width: position.width,
+        height: position.height,
+        minConstraints: minConstraints,
+        maxConstraints: maxConstraints,
+        onResizeStop: this.onResizeHandler('onResizeStop'),
+        onResizeStart: this.onResizeHandler('onResizeStart'),
+        onResize: this.onResizeHandler('onResize')
+      }, void 0, child);
     }
 
     /**
@@ -420,75 +416,6 @@ var GridItem = function (_React$Component) {
   return GridItem;
 }(React.Component);
 
-GridItem.propTypes = {
-  // Children must be only a single element
-  children: PropTypes.element,
-
-  // General grid attributes
-  cols: PropTypes.number.isRequired,
-  containerWidth: PropTypes.number.isRequired,
-  rowHeight: PropTypes.number.isRequired,
-  margin: PropTypes.array.isRequired,
-  maxRows: PropTypes.number.isRequired,
-  containerPadding: PropTypes.array.isRequired,
-
-  // These are all in grid units
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  w: PropTypes.number.isRequired,
-  h: PropTypes.number.isRequired,
-
-  // All optional
-  minW: function minW(props, propName) {
-    var value = props[propName];
-    if (typeof value !== 'number') return new Error('minWidth not Number');
-    if (value > props.w || value > props.maxW) return new Error('minWidth larger than item width/maxWidth');
-  },
-
-  maxW: function maxW(props, propName) {
-    var value = props[propName];
-    if (typeof value !== 'number') return new Error('maxWidth not Number');
-    if (value < props.w || value < props.minW) return new Error('maxWidth smaller than item width/minWidth');
-  },
-
-  minH: function minH(props, propName) {
-    var value = props[propName];
-    if (typeof value !== 'number') return new Error('minHeight not Number');
-    if (value > props.h || value > props.maxH) return new Error('minHeight larger than item height/maxHeight');
-  },
-
-  maxH: function maxH(props, propName) {
-    var value = props[propName];
-    if (typeof value !== 'number') return new Error('maxHeight not Number');
-    if (value < props.h || value < props.minH) return new Error('maxHeight smaller than item height/minHeight');
-  },
-
-  // ID is nice to have for callbacks
-  i: PropTypes.string.isRequired,
-
-  // Functions
-  onDragStop: PropTypes.func,
-  onDragStart: PropTypes.func,
-  onDrag: PropTypes.func,
-  onResizeStop: PropTypes.func,
-  onResizeStart: PropTypes.func,
-  onResize: PropTypes.func,
-
-  // Flags
-  isDraggable: PropTypes.bool.isRequired,
-  isResizable: PropTypes.bool.isRequired,
-  static: PropTypes.bool,
-
-  // Use CSS transforms instead of top/left
-  useCSSTransforms: PropTypes.bool.isRequired,
-
-  // Others
-  className: PropTypes.string,
-  // Selector for draggable handle
-  handle: PropTypes.string,
-  // Selector for draggable cancel (see react-draggable)
-  cancel: PropTypes.string
-};
 GridItem.defaultProps = {
   className: '',
   cancel: '',

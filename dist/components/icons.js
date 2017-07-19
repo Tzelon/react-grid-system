@@ -1,3 +1,5 @@
+var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7; return function createRawReactElement(type, props, key, children) { var defaultProps = type && type.defaultProps; var childrenLength = arguments.length - 3; if (!props && childrenLength !== 0) { props = {}; } if (props && defaultProps) { for (var propName in defaultProps) { if (props[propName] === void 0) { props[propName] = defaultProps[propName]; } } } else if (!props) { props = defaultProps || {}; } if (childrenLength === 1) { props.children = children; } else if (childrenLength > 1) { var childArray = Array(childrenLength); for (var i = 0; i < childrenLength; i++) { childArray[i] = arguments[i + 3]; } props.children = childArray; } return { $$typeof: REACT_ELEMENT_TYPE, type: type, key: key === undefined ? null : '' + key, ref: null, props: props, _owner: null }; }; }();
+
 var _templateObject = _taggedTemplateLiteral(['\n         width: 24px; \n         height: 24px;\n    '], ['\n         width: 24px; \n         height: 24px;\n    ']),
     _templateObject2 = _taggedTemplateLiteral(['\n  & {\n    width: 24px;\n    height: 24px;\n  }\n'], ['\n  & {\n    width: 24px;\n    height: 24px;\n  }\n']);
 
@@ -12,11 +14,13 @@ import styled from 'styled-components';
 
 var wrapSvg = function wrapSvg(Component) {
     return function (props) {
-        return React.createElement(
-            'svg',
-            { height: '24', width: '24', role: 'presentation', focusable: 'false', 'aria-hidden': 'true' },
-            React.createElement(Component, props)
-        );
+        return _jsx('svg', {
+            height: '24',
+            width: '24',
+            role: 'presentation',
+            focusable: 'false',
+            'aria-hidden': 'true'
+        }, void 0, React.createElement(Component, props));
     };
 };
 
@@ -37,25 +41,9 @@ DotsHorizontal.defaultProps = {
     fill: "#ffffff"
 };
 
-export var Grid = function Grid(_ref) {
-    var size = _ref.size;
-    return React.createElement(
-        'svg',
-        { height: '24', width: '50', viewBox: '0 0 15 13', role: 'presentation', focusable: 'false', 'aria-hidden': 'true',
-            fill: '#ffffff' },
-        React.createElement(
-            'g',
-            null,
-            React.createElement('path', {
-                d: 'M18 0H0v13h19V0h-1zM3 12H1v-2h2v2zm0-3H1V7h2v2zm0-3H1V4h2v2zm0-3H1V1h2v2zm3 9H4v-2h2v2zm0-3H4V7h2v2zm0-3H4V4h2v2zm0-3H4V1h2v2zm3 9H7v-2h2v2zm0-3H7V7h2v2zm0-3H7V4h2v2zm0-3H7V1h2v2zm3 9h-2v-2h2v2zm0-3h-2V7h2v2zm0-3h-2V4h2v2zm0-3h-2V1h2v2zm3 9h-2v-2h2v2zm0-3h-2V7h2v2zm0-3h-2V4h2v2zm0-3h-2V1h2v2zm3 9h-2v-2h2v2zm0-3h-2V7h2v2zm0-3h-2V4h2v2zm0-3h-2V1h2v2z' }),
-            React.createElement('rect', { width: size[0] * 3 + 1, height: size[1] * 3 + 1 })
-        )
-    );
-};
-
-Grid.propTypes = {
-    size: PropTypes.array
-};
+var _ref2 = _jsx('path', {
+    d: 'M18 0H0v13h19V0h-1zM3 12H1v-2h2v2zm0-3H1V7h2v2zm0-3H1V4h2v2zm0-3H1V1h2v2zm3 9H4v-2h2v2zm0-3H4V7h2v2zm0-3H4V4h2v2zm0-3H4V1h2v2zm3 9H7v-2h2v2zm0-3H7V7h2v2zm0-3H7V4h2v2zm0-3H7V1h2v2zm3 9h-2v-2h2v2zm0-3h-2V7h2v2zm0-3h-2V4h2v2zm0-3h-2V1h2v2zm3 9h-2v-2h2v2zm0-3h-2V7h2v2zm0-3h-2V4h2v2zm0-3h-2V1h2v2zm3 9h-2v-2h2v2zm0-3h-2V7h2v2zm0-3h-2V4h2v2zm0-3h-2V1h2v2z'
+});
 
 /*   <rect width="7" height="7" ></rect>
  <rect width="13" height="7" ></rect>
@@ -64,3 +52,18 @@ Grid.propTypes = {
  <rect width="19" height="13" ></rect>
  <rect width="13" height="19" ></rect>
  <rect width="19" height="19" ></rect>*/
+export var Grid = function Grid(_ref) {
+    var size = _ref.size;
+    return _jsx('svg', {
+        height: '24',
+        width: '50',
+        viewBox: '0 0 15 13',
+        role: 'presentation',
+        focusable: 'false',
+        'aria-hidden': 'true',
+        fill: '#ffffff'
+    }, void 0, _jsx('g', {}, void 0, _ref2, _jsx('rect', {
+        width: size[0] * 3 + 1,
+        height: size[1] * 3 + 1
+    })));
+};
