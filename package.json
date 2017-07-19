@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node_modules/.bin/webpack-dev-server --config ./webpack.dev.config.js --progress --colors --port 4002 --open --content-base",
-    "postinstall": "npm run build",
     "prebuild": "npm run build:clean",
     "build": "cross-env NODE_ENV=production node_modules/.bin/babel --stage 0 --out-dir ./dist ./src",
     "build:clean": "node_modules/.bin/rimraf ./build"
