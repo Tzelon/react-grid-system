@@ -14,7 +14,6 @@ import '../css/styles.css';
 const render = () => {
   ReactDOM.render(
     <div>
-      <p>Hello React!</p>
       <ShowcaseLayout/>
     </div>,
     document.getElementById('app'),

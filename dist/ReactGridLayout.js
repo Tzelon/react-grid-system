@@ -239,7 +239,7 @@ var ReactGridLayout = function (_React$Component) {
 
       // Create placeholder element (display only)
       var placeholder = {
-        w: w, h: h, x: l.x, y: l.y, static: true, i: i
+        w: w, h: h, x: l.x, y: l.y, i: i
       };
 
       this.props.onResize(layout, oldResizeItem, l, placeholder, e, node);
