@@ -36,7 +36,7 @@ const ListContainer = styled('ul')`
     display: none;
     cursor: pointer;
     position: fixed;
-    z-index: 255;
+    z-index: 9999;
     margin: 0;
     padding: 0;
   }

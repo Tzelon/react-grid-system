@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import ReactGridLayout, { Responsive, WidthProvider } from 'react-grid-system';
+import randomstring from 'randomstring';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
+import { widgetFactory } from '../src/WidgetFactory';
 const Demo = (props) => {
-  console.log(props);
   return (
     <div>
       Hello Im Demoe
@@ -12,8 +14,17 @@ const Demo = (props) => {
 
 };
 
-export  default class ShowcaseLayout extends React.Component {
+const data = [
+      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
+      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
+      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
+      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
+      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
+      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
+      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+];
 
+export default class ShowcaseLayout extends React.Component {
   static propTypes = {
     onLayoutChange: PropTypes.func.isRequired,
   };
@@ -28,27 +39,36 @@ export  default class ShowcaseLayout extends React.Component {
   };
 
   state = {
-    currentBreakpoint: 'lg',
+    currentBreakpoint: 'xxs',
     mounted: false,
-    layout: this.props.initialLayout,
+    layout: [
+            { i: this.generateRandomKey(), x: 0, y: 1, w: 5, h: 3, itemSizes: [[5, 3], [4, 4]], type:"Line" },
+            { i: this.generateRandomKey(), x: 5, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            { i: this.generateRandomKey(), x: 15, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+          ],
   };
+
+  /**
+  * 52(chars) ^ 4 = 7,311,616 options
+  **/
+  generateRandomKey() {
+    return randomstring.generate({
+      length: 4,
+      charset: 'alphabetic'
+    });
+  }
 
   componentDidMount() {
     this.setState({ mounted: true });
   }
 
-  generateDOM() {
-    return _.map(this.state.layout, function (l, i) {
-      return (
-        <div key={i} className={l.static ? 'static' : ''} >
-          {l.static ?
-            <span className="text"
-                  title="This item is static and cannot be removed or resized." >Static - {i}</span>
-            : <span className="text" >{i}</span>
-          }
-        </div>);
-    });
-  }
+
+renderBoxes() {
+  const layouts = this.state.layout.map((box) => widgetFactory(box, data) )
+  return layouts;
+}
 
   onBreakpointChange = (breakpoint) => {
     this.setState({
@@ -60,35 +80,17 @@ export  default class ShowcaseLayout extends React.Component {
     this.props.onLayoutChange(layout, layouts);
   };
 
-  onNewLayout = () => {
-    this.setState({
-      layout: [
-        { i: 'a', x: 0, y: 0, w: 1, h: 2, itemSizes: [[1, 1], [2, 2], [3, 4]] },
-        { i: 'b', x: 1, y: 0, w: 3, h: 2, itemSizes: [[1, 1], [4, 4]] },
-      ],
-    });
-  };
-
   render() {
     return (
       <div>
-        <div>Current Breakpoint: {this.state.currentBreakpoint} ({this.props.cols[this.state.currentBreakpoint]}
-          columns)
-        </div>
-        <button onClick={this.onNewLayout} >Generate New Layout</button>
         <ReactGridLayout
           {...this.props}
-          layout={[
-            { i: 'a', x: 0, y: 0, w: 1, h: 2, itemSizes: [[1, 1], [2, 2], [3, 4]] },
-            { i: 'b', x: 1, y: 0, w: 3, h: 2, itemSizes: [[1, 1], [4, 4]] },
-          ]}
+          layout={this.state.layout}
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
           // WidthProvider option
           measureBeforeMount={true}
-          // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
-          // and set `measureBeforeMount={true}`.
-          useCSSTransforms={true}
+          useCSSTransforms={false}
           verticalCompact={false}
           margin={[5, 5]}
           rowHeight={85}
@@ -96,13 +98,14 @@ export  default class ShowcaseLayout extends React.Component {
           width={2705}
           cols={30}
         >
-          <Demo key={'a'} />
-          <Demo key={'b'} />
+        {this.renderBoxes()}
         </ReactGridLayout >
       </div>
     );
   }
 }
+
+
 
 function generateLayout() {
   return _.map(_.range(0, 2), function (item, i) {
