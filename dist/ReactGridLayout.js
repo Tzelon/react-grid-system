@@ -239,7 +239,7 @@ var ReactGridLayout = function (_React$Component) {
 
       // Create placeholder element (display only)
       var placeholder = {
-        w: w, h: h, x: l.x, y: l.y, i: i
+        w: w, h: h, x: l.x, y: l.y, static: true, i: i
       };
 
       this.props.onResize(layout, oldResizeItem, l, placeholder, e, node);
@@ -399,7 +399,7 @@ var ReactGridLayout = function (_React$Component) {
         style: mergedStyle
       }, void 0, React.Children.map(this.props.children, function (child) {
         return _this2.processGridItem(child);
-      }), this.placeholder());
+      }));
     }
   }]);
 
