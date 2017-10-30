@@ -44,7 +44,7 @@ var GridItemExtend = function (_React$Component) {
       resizing: null,
       dragging: null,
       className: '',
-      editable: false
+      editable: true
     }, _this.onItemClick = function (item) {
       _this.onResizeHandler("onResize")(null, {
         node: null,
@@ -402,7 +402,7 @@ var GridItemExtend = function (_React$Component) {
 
       if (this.props.isSelected) return;
       setTimeout(function () {
-        return _this5.setState({ editable: false });
+        return _this5.setState({ editable: true });
       }, 500);
     }
   }, {

@@ -448,7 +448,7 @@ export default class ReactGridLayout extends React.Component {
     return (
       <div className={classNames('react-grid-layout', className)} style={mergedStyle}>
         {React.Children.map(this.props.children, (child) => this.processGridItem(child))}
-        
+
       </div>
     );
   }

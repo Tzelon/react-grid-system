@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart
 
 const handleClick = (e) => {
 	console.log(e);
-}
+};
 
 class SimpleLineChart extends PureComponent {
 	constructor(props) {
@@ -87,6 +87,6 @@ export const widgetFactory = (widget, data) => {
 			return <SimpleBarChart key={widget.i} data={data} width={widget.w} height={widget.h} rowWidth={widget.rowWidth} rowHeight={widget.rowHeight} margin={widget.margin[0]}/>;
 		default:
 			return undefined;
-	}	
+	}
 }
 
