@@ -5,14 +5,6 @@ import ReactGridLayout, { Responsive, WidthProvider } from 'react-grid-system';
 import randomstring from 'randomstring';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 import { widgetFactory } from '../src/WidgetFactory';
-const Demo = (props) => {
-  return (
-    <div>
-      Hello Im Demoe
-    </div>
-  );
-
-};
 
 const data = [
       {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
@@ -23,6 +15,12 @@ const data = [
       {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
       {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
 ];
+
+const ROW_WIDTH = 160;
+const ROW_HEIGHT = 85;
+
+const COLUMNS = 10;
+const MAX_ROWS = 10;
 
 export default class ShowcaseLayout extends React.Component {
   static propTypes = {
@@ -35,18 +33,17 @@ export default class ShowcaseLayout extends React.Component {
     onLayoutChange: function () {
     },
     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-    initialLayout: generateLayout(),
   };
 
   state = {
     currentBreakpoint: 'xxs',
     mounted: false,
     layout: [
-            { i: this.generateRandomKey(), x: 0, y: 1, w: 5, h: 3, itemSizes: [[5, 3], [4, 4]], type:"Line" },
-            { i: this.generateRandomKey(), x: 5, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
-            { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
-            { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
-            { i: this.generateRandomKey(), x: 15, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            { i: this.generateRandomKey(), x: 0, y: 1, w: 5, h: 3, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
+            { i: this.generateRandomKey(), x: 5, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
+            // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            // { i: this.generateRandomKey(), x: 15, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
           ],
   };
 
@@ -64,23 +61,46 @@ export default class ShowcaseLayout extends React.Component {
     this.setState({ mounted: true });
   }
 
+  paintGrid(iHeight, iWIdth) {
+    const ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / iWIdth ),
+        ratioH = Math.floor((window.innerHeight || document.documentElement.offsetHeight) / iHeight );
 
-renderBoxes() {
-  const layouts = this.state.layout.map((box) => widgetFactory(box, data) )
-  return layouts;
+    const parent = document.createElement('div');
+    parent.className = 'grid';
+    parent.style.width = (ratioW * iWIdth) + 'px';
+    parent.style.height = (ratioH * iHeight) + 'px';
+
+    for (let i = 0; i < ratioH; i++) {
+        for (let p = 0; p < ratioW; p++) {
+            const cell = document.createElement('div');
+            cell.style.height = (iHeight - 1) + 'px';
+            cell.style.width = (iWIdth - 1) + 'px';
+            parent.appendChild(cell);
+        }
+    }
+
+    document.body.appendChild(parent);
 }
+
+
+  renderBoxes() {
+    const layouts = this.state.layout.map((box) => widgetFactory(box, data))
+    return layouts;
+  }
 
   onBreakpointChange = (breakpoint) => {
     this.setState({
       currentBreakpoint: breakpoint,
     });
-  };
+  }
 
   onLayoutChange = (layout, layouts) => {
     this.props.onLayoutChange(layout, layouts);
-  };
+  }
 
   render() {
+    this.paintGrid(ROW_HEIGHT, ROW_WIDTH);
+    
     return (
       <div>
         <ReactGridLayout
@@ -93,10 +113,12 @@ renderBoxes() {
           useCSSTransforms={false}
           verticalCompact={false}
           margin={[5, 5]}
-          rowHeight={85}
+          rowHeight={ROW_HEIGHT}
+          rowWidth={ROW_WIDTH}
           isResizable={false}
-          width={2705}
-          cols={30}
+          autoSize={false}
+          maxRows={MAX_ROWS}
+          cols={COLUMNS}
         >
         {this.renderBoxes()}
         </ReactGridLayout >
@@ -106,22 +128,3 @@ renderBoxes() {
 }
 
 
-
-function generateLayout() {
-  return _.map(_.range(0, 2), function (item, i) {
-    const y = Math.ceil(Math.random() * 4) + 1;
-    return {
-      x: _.random(0, 5) * 2 % 12,
-      y: Math.floor(i / 6) * y,
-      w: 2,
-      h: y,
-      i: i.toString(),
-      static: Math.random() < 0.05,
-      itemSizes: [
-        [1, 1],
-        [2, 2],
-        [3, 4],
-      ],
-    };
-  });
-}

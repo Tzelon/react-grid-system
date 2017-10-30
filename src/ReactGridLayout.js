@@ -34,7 +34,8 @@ export default class ReactGridLayout extends React.Component {
     //
     className: PropTypes.string,
     style: PropTypes.object,
-
+    rowWidth: PropTypes.number,
+    
     // This can be set explicitly. If it is not set, it will automatically
     // be set to the container width. Note that resizes will *not* cause this to adjust.
     // If you need that behavior, use WidthProvider.
@@ -145,7 +146,8 @@ export default class ReactGridLayout extends React.Component {
     onDragStop: noop,
     onResizeStart: noop,
     onResize: noop,
-    onResizeStop: noop
+    onResizeStop: noop,
+    rowWidth: 85,
   };
 
   state: State = {
@@ -389,16 +391,16 @@ export default class ReactGridLayout extends React.Component {
     if (!l) return null;
     const {width, cols, margin, containerPadding, rowHeight,
            maxRows, isDraggable, isResizable, useCSSTransforms,
-           draggableCancel, draggableHandle} = this.props;
+           draggableCancel, draggableHandle, rowWidth} = this.props;
     const {mounted} = this.state;
 
     // Parse 'static'. Any properties defined directly on the grid item will take precedence.
     const draggable = Boolean(!l.static && isDraggable && (l.isDraggable || l.isDraggable == null));
     const resizable = Boolean(!l.static && isResizable && (l.isResizable || l.isResizable == null));
-
+    
     return (
       <GridItem
-        containerWidth={width}
+        containerWidth={rowWidth * cols}
         cols={cols}
         margin={margin}
         containerPadding={containerPadding || margin}
@@ -428,6 +430,7 @@ export default class ReactGridLayout extends React.Component {
         maxW={l.maxW}
         static={l.static}
         itemSizes={l.itemSizes}
+        rowWidth={rowWidth}
         >
         {child}
       </GridItem>
