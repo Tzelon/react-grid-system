@@ -13,10 +13,23 @@ class SimpleLineChart extends PureComponent {
 
 		};
 	}
+
+	extractItemSize = () => {
+		const itemSize = this.props.itemSize;
+		if(itemSize !== undefined) {
+			const listOfSizes = itemSize.split('x').map(number => parseInt(number));
+			return {width: listOfSizes[0], height: listOfSizes[1]}
+		}
+
+		return { width: this.props.width, height: this.props.height }
+	}
+
+
 	render() {
+		const {width, height} = this.extractItemSize()
 		return (
 			<div key={this.props.key} >
-				<LineChart width={this.props.width * 85} height={this.props.height * 85} data={this.props.data}
+				<LineChart width={width * this.props.rowWidth} height={height * this.props.rowHeight} data={this.props.data}
 				margin={{top: 20, right: 30, left: 20, bottom: 5}} > 
 					<XAxis dataKey="name"/>
 					<YAxis/>
@@ -36,10 +49,22 @@ class SimpleBarChart extends PureComponent {
 		this.state = {
 		};
 	}
+
+	extractItemSize = () => {
+		const itemSize = this.props.itemSize;
+		if(itemSize !== undefined) {
+			const listOfSizes = itemSize.split('x').map(number => parseInt(number));
+			return {width: listOfSizes[0], height: listOfSizes[1]}
+		}
+
+		return { width: this.props.width, height: this.props.height }
+	}
+
 	render () {
+		const {width, height} = this.extractItemSize()
 		return (
 			<div key={this.props.key}>
-				<BarChart width={this.props.width * 85} height={this.props.height * 85} data={this.props.data}
+				<BarChart width={width * this.props.rowWidth} height={height * this.props.rowHeight} data={this.props.data}
 				margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 					<XAxis dataKey="name"/>
 					<YAxis/>
@@ -57,9 +82,9 @@ class SimpleBarChart extends PureComponent {
 export const widgetFactory = (widget, data) => {
 	switch(widget.type) {
 		case 'Line':
-			return <SimpleLineChart key={widget.i} data={data} width={widget.w} height={widget.h} />;
+			return <SimpleLineChart key={widget.i} data={data} width={widget.w} height={widget.h} rowWidth={widget.rowWidth} rowHeight={widget.rowHeight} margin={widget.margin[0]} />;
 		case 'Bar':
-			return <SimpleBarChart key={widget.i} data={data} width={widget.w} height={widget.h} />;
+			return <SimpleBarChart key={widget.i} data={data} width={widget.w} height={widget.h} rowWidth={widget.rowWidth} rowHeight={widget.rowHeight} margin={widget.margin[0]}/>;
 		default:
 			return undefined;
 	}	

@@ -35,6 +35,7 @@ export default class GridItemExtend extends React.Component {
     margin: PropTypes.array.isRequired,
     maxRows: PropTypes.number.isRequired,
     containerPadding: PropTypes.array.isRequired,
+    rowWidth: PropTypes.number.isRequired,
 
     // These are all in grid units
     x: PropTypes.number.isRequired,
@@ -386,11 +387,11 @@ export default class GridItemExtend extends React.Component {
   onItemClick = (item) => {
     this.onResizeHandler("onResize")(null, {
       node: null,
-      size: { left: 0, top: 0, width: item.value[0] * 85, height: item.value[1] * 85 },
+      size: { left: 0, top: 0, width: item.value[0] * this.props.rowWidth, height: item.value[1] *  this.props.rowHeight },
     });
     this.onResizeHandler("onResizeStop")(null, {
       node: null,
-      size: { left: 0, top: 0, width: item.value[0] * 85, height: item.value[1] * 85 },
+      size: { left: 0, top: 0, width: item.value[0] *  this.props.rowWidth, height: item.value[1] *  this.props.rowHeight },
     });
   };
 
