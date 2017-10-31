@@ -139,7 +139,7 @@ export default class GridItemExtend extends React.Component {
 
     const out = {
       left: Math.round((colWidth + margin[0]) * x + containerPadding[0]),
-      top: Math.round((rowHeight + margin[1]) * y + containerPadding[1]),
+      top: Math.round((rowHeight ) * y ),
       // 0 * Infinity === NaN, which causes problems with resize constraints;
       // Fix this if it occurs.
       // Note we do it here rather than later because Math.round(Infinity) causes deopt
@@ -155,6 +155,7 @@ export default class GridItemExtend extends React.Component {
     if (state && state.dragging) {
       out.top = Math.round(state.dragging.top);
       out.left = Math.round(state.dragging.left);
+
     }
 
     return out;
@@ -428,7 +429,6 @@ export default class GridItemExtend extends React.Component {
         )}
       </div>
     );
-
     if (this.state.editable) child = this.mixinHeader(child);
 
     // Create the child element. We clone the existing element but modify its className and style.
