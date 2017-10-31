@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import ReactGridLayout, { Responsive, WidthProvider } from 'react-grid-system';
 import randomstring from 'randomstring';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 import { widgetFactory } from '../src/WidgetFactory';
 
 const data = [
@@ -16,11 +14,10 @@ const data = [
       {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
 ];
 
-const ROW_WIDTH = 160;
 const ROW_HEIGHT = 85;
-
-const COLUMNS = 10;
+const COLUMNS = 20;
 const MAX_ROWS = 10;
+const ROW_WIDTH =  Math.floor((window.innerWidth || document.documentElement.offsetWidth) / COLUMNS );
 
 export default class ShowcaseLayout extends React.Component {
   static propTypes = {
@@ -29,7 +26,7 @@ export default class ShowcaseLayout extends React.Component {
 
   static defaultProps = {
     className: "layout",
-    rowHeight: 30,
+    rowHeight: 20,
     onLayoutChange: function () {
     },
     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
@@ -39,16 +36,16 @@ export default class ShowcaseLayout extends React.Component {
     currentBreakpoint: 'xxs',
     mounted: false,
     layout: [
-            { i: this.generateRandomKey(), x: 0, y: 1, w: 5, h: 3, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
+            { i: this.generateRandomKey(), x: 0, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [0, 0] },
             { i: this.generateRandomKey(), x: 5, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
-            // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
             // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
             // { i: this.generateRandomKey(), x: 15, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
           ],
   };
 
   /**
-  * 52(chars) ^ 4 = 7,311,616 options
+  * 52(chars) for 4 number = a lot... :-)
   **/
   generateRandomKey() {
     return randomstring.generate({
@@ -61,20 +58,20 @@ export default class ShowcaseLayout extends React.Component {
     this.setState({ mounted: true });
   }
 
-  paintGrid(iHeight, iWIdth) {
-    const ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / iWIdth ),
+  paintGrid(iHeight, iWidth) {
+    const ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / iWidth ),
         ratioH = Math.floor((window.innerHeight || document.documentElement.offsetHeight) / iHeight );
 
     const parent = document.createElement('div');
     parent.className = 'grid';
-    parent.style.width = (ratioW * iWIdth) + 'px';
+    parent.style.width = (ratioW * iWidth) + 'px';
     parent.style.height = (ratioH * iHeight) + 'px';
 
     for (let i = 0; i < ratioH; i++) {
         for (let p = 0; p < ratioW; p++) {
             const cell = document.createElement('div');
             cell.style.height = (iHeight - 1) + 'px';
-            cell.style.width = (iWIdth - 1) + 'px';
+            cell.style.width = (iWidth - 1) + 'px';
             parent.appendChild(cell);
         }
     }
@@ -100,7 +97,7 @@ export default class ShowcaseLayout extends React.Component {
 
   render() {
     this.paintGrid(ROW_HEIGHT, ROW_WIDTH);
-    
+
     return (
       <div>
         <ReactGridLayout
@@ -110,9 +107,9 @@ export default class ShowcaseLayout extends React.Component {
           onLayoutChange={this.onLayoutChange}
           // WidthProvider option
           measureBeforeMount={true}
-          useCSSTransforms={false}
+          // useCSSTransforms={false}
           verticalCompact={false}
-          margin={[5, 5]}
+          margin={[0, 0]}
           rowHeight={ROW_HEIGHT}
           rowWidth={ROW_WIDTH}
           isResizable={false}
