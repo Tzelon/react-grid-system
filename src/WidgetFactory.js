@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import randomstring from 'randomstring';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 
 const handleClick = (e) => {
@@ -30,7 +29,7 @@ class SimpleLineChart extends PureComponent {
 		return (
 			<div key={this.props.key} >
 				<LineChart width={width * this.props.rowWidth} height={height * this.props.rowHeight} data={this.props.data}
-				margin={{top: 20, right: 30, left: 20, bottom: 5}} > 
+				margin={{top: 20, right: 30, left: 20, bottom: 5}} >
 					<XAxis dataKey="name"/>
 					<YAxis/>
 					<CartesianGrid strokeDasharray="3 3"/>
