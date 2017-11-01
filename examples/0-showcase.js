@@ -41,6 +41,7 @@ export default class ShowcaseLayout extends React.Component {
     onLayoutChange: function () {
     },
     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    showGrid: false,
   };
 
   state = {
@@ -110,7 +111,9 @@ export default class ShowcaseLayout extends React.Component {
   };
 
   render() {
-    this.paintGrid(ROW_HEIGHT, ROW_WIDTH);
+    if(this.props.showGrid) {
+      this.paintGrid(ROW_HEIGHT, ROW_WIDTH);
+    }
 
     return (
       <div>
