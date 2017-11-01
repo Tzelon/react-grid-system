@@ -14,6 +14,17 @@ const data = [
       {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
 ];
 
+
+const dataRadialBar = [
+  {name: '18-24', uv: 31.47, pv: 2400, fill: '#8884d8'},
+  {name: '25-29', uv: 26.69, pv: 4567, fill: '#83a6ed'},
+  {name: '30-34', uv: 15.69, pv: 1398, fill: '#8dd1e1'},
+  {name: '35-39', uv: 8.22, pv: 9800, fill: '#82ca9d'},
+  {name: '40-49', uv: 8.63, pv: 3908, fill: '#a4de6c'},
+  {name: '50+', uv: 2.63, pv: 4800, fill: '#d0ed57'},
+  {name: 'unknow', uv: 6.67, pv: 4800, fill: '#ffc658'}
+];
+
 const ROW_HEIGHT = 85;
 const COLUMNS = 20;
 const MAX_ROWS = 10;
@@ -36,11 +47,10 @@ export default class ShowcaseLayout extends React.Component {
     currentBreakpoint: 'xxs',
     mounted: false,
     layout: [
-            { i: this.generateRandomKey(), x: 0, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [0, 0] },
-            { i: this.generateRandomKey(), x: 5, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
-            // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] },
-            // { i: this.generateRandomKey(), x: 9, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
-            // { i: this.generateRandomKey(), x: 15, y: 1, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar" },
+            { i: this.generateRandomKey(), x: 1, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
+            { i: this.generateRandomKey(), x: 5, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] , data: data },
+            { i: this.generateRandomKey(), x: 6, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"LineBarArea", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
+            { i: this.generateRandomKey(), x: 10, y: 4, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"RadialBar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: dataRadialBar },
           ],
   };
 
@@ -81,19 +91,23 @@ export default class ShowcaseLayout extends React.Component {
 
 
   renderBoxes() {
-    const layouts = this.state.layout.map((box) => widgetFactory(box, data))
-    return layouts;
+    return this.state.layout.map((box) => widgetFactory(box, box.data));
   }
 
   onBreakpointChange = (breakpoint) => {
     this.setState({
       currentBreakpoint: breakpoint,
     });
-  }
+  };
 
   onLayoutChange = (layout, layouts) => {
     this.props.onLayoutChange(layout, layouts);
-  }
+  };
+
+  onRemoveItem = (key) => {
+    const filterdLayoutsList = this.state.layout.filter(widget => widget.i !== key);
+    this.setState({layout: filterdLayoutsList });
+  };
 
   render() {
     this.paintGrid(ROW_HEIGHT, ROW_WIDTH);
@@ -116,6 +130,7 @@ export default class ShowcaseLayout extends React.Component {
           autoSize={false}
           maxRows={MAX_ROWS}
           cols={COLUMNS}
+          handleRemoveItem = {this.onRemoveItem.bind(this)}
         >
         {this.renderBoxes()}
         </ReactGridLayout >
