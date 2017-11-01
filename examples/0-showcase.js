@@ -47,10 +47,10 @@ export default class ShowcaseLayout extends React.Component {
     currentBreakpoint: 'xxs',
     mounted: false,
     layout: [
-            { i: this.generateRandomKey(), x: 1, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
-            { i: this.generateRandomKey(), x: 5, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] , data: data },
-            { i: this.generateRandomKey(), x: 6, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"LineBarArea", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
-            { i: this.generateRandomKey(), x: 10, y: 4, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"RadialBar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: dataRadialBar },
+            { i: this.generateRandomKey(), x: 0, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
+            { i: this.generateRandomKey(), x: 6, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] , data: data },
+            { i: this.generateRandomKey(), x: 11, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"LineBarArea", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
+            { i: this.generateRandomKey(), x: 0, y: 5, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"RadialBar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: dataRadialBar },
           ],
   };
 
