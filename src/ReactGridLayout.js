@@ -35,7 +35,7 @@ export default class ReactGridLayout extends React.Component {
     className: PropTypes.string,
     style: PropTypes.object,
     rowWidth: PropTypes.number,
-    
+
     // This can be set explicitly. If it is not set, it will automatically
     // be set to the container width. Note that resizes will *not* cause this to adjust.
     // If you need that behavior, use WidthProvider.
@@ -355,7 +355,7 @@ export default class ReactGridLayout extends React.Component {
   placeholder(): ?React.Element<any> {
     const {activeDrag} = this.state;
     if (!activeDrag) return null;
-    const {width, cols, margin, containerPadding, rowHeight, maxRows, useCSSTransforms} = this.props;
+    const {width, cols, margin, containerPadding, rowHeight, maxRows, useCSSTransforms, handleRemoveItem} = this.props;
 
     // {...this.state.activeDrag} is pretty slow, actually
     return (
@@ -374,7 +374,8 @@ export default class ReactGridLayout extends React.Component {
         rowHeight={rowHeight}
         isDraggable={false}
         isResizable={false}
-        useCSSTransforms={useCSSTransforms}>
+        useCSSTransforms={useCSSTransforms}
+        onRemoveItem ={handleRemoveItem}>
         <div />
       </GridItem>
     );
@@ -391,13 +392,13 @@ export default class ReactGridLayout extends React.Component {
     if (!l) return null;
     const {width, cols, margin, containerPadding, rowHeight,
            maxRows, isDraggable, isResizable, useCSSTransforms,
-           draggableCancel, draggableHandle, rowWidth} = this.props;
+           draggableCancel, draggableHandle, rowWidth, handleRemoveItem} = this.props;
     const {mounted} = this.state;
 
     // Parse 'static'. Any properties defined directly on the grid item will take precedence.
     const draggable = Boolean(!l.static && isDraggable && (l.isDraggable || l.isDraggable == null));
     const resizable = Boolean(!l.static && isResizable && (l.isResizable || l.isResizable == null));
-    
+
     return (
       <GridItem
         containerWidth={rowWidth * cols}
@@ -418,6 +419,8 @@ export default class ReactGridLayout extends React.Component {
         isResizable={resizable}
         useCSSTransforms={useCSSTransforms && mounted}
         usePercentages={!mounted}
+        onRemoveItem ={handleRemoveItem}
+        key={child.key}
 
         w={l.w}
         h={l.h}

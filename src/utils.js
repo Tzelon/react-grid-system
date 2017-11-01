@@ -316,7 +316,7 @@ export function setTransform({top, left, width, height}: Position): Object {
     OTransform: translate,
     width: `${width}px`,
     height: `${height}px`,
-    position: 'absolute'
+    position: 'absolute',
   };
 }
 

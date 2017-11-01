@@ -45,40 +45,7 @@
     float: left;
     position: relative;
 }
-/*
-.grid div:before, .grid div:after{
-    transition: all 3s;
-    opacity: 0;
-}
 
-.grid div:hover:before {
-  content: " ";
-  position: absolute;
-  display: block;
-  background-color: #565454;
-  width: 3px;
-  margin-left: -5px;
-  left: 50%;
-  top: 28px;
-  bottom: 35px;
-  z-index: 9;
-  opacity: 1;
-  
-}
-.grid div:hover:after {
-  content: " ";
-  position: absolute;
-  display: block;
-  background-color: #565454;
-  height: 3px;
-  margin-top: -5px;
-  top: 50%;
-  left:46px;
-  right: 52px;
-  z-index: 9;
-  opacity: 1;
-}
-*/
 .react-grid-layout {
   position: relative;
   transition: height 200ms ease;

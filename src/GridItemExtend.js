@@ -139,7 +139,7 @@ export default class GridItemExtend extends React.Component {
 
     const out = {
       left: Math.round((colWidth + margin[0]) * x + containerPadding[0]),
-      top: Math.round((rowHeight + margin[1]) * y + containerPadding[1]),
+      top: Math.round((rowHeight  + margin[1]) * y + containerPadding[1]),
       // 0 * Infinity === NaN, which causes problems with resize constraints;
       // Fix this if it occurs.
       // Note we do it here rather than later because Math.round(Infinity) causes deopt
@@ -324,6 +324,7 @@ export default class GridItemExtend extends React.Component {
           if (!this.state.dragging) throw new Error('onDragEnd called before onDragStart.');
           newPosition.left = this.state.dragging.left;
           newPosition.top = this.state.dragging.top;
+
           this.setState({ dragging: null });
           break;
         default:
@@ -331,7 +332,6 @@ export default class GridItemExtend extends React.Component {
       }
 
       const { x, y } = this.calcXY(newPosition.top, newPosition.left);
-
       this.props[handlerName](this.props.i, x, y, { e, node, newPosition });
     };
   }
@@ -400,7 +400,7 @@ export default class GridItemExtend extends React.Component {
       <div>
         <div className="react-editable" >
                     <span className="icon-container" onMouseDown={this.onMouseDownPreventDrag}
-                          onClick={this.props.onRemoveItem} ><Close/></span>
+                          onClick={this.props.onRemoveItem.bind(this, child.key)} ><Close/></span>
           {!isEmpty(this.props.itemSizes) &&
           <DropdownMenu itemClick={this.onItemClick} className="icon-container" >
             { this.props.itemSizes.map((item) =>
@@ -428,7 +428,6 @@ export default class GridItemExtend extends React.Component {
         )}
       </div>
     );
-
     if (this.state.editable) child = this.mixinHeader(child);
 
     // Create the child element. We clone the existing element but modify its className and style.
