@@ -307,9 +307,7 @@ export function perc(num: number): string {
 
 export function setTransform({top, left, width, height}: Position): Object {
   // Replace unitless items with px
-  const topBar = document.getElementsByClassName('react-editable');
-  const topBarHeight = topBar[0] ? topBar[0].clientHeight : 0;
-  const translate = `translate(${left}px,${top + topBarHeight}px)`; // topBarHeight is the size of the topBar, if there is no topBar the height is 0;
+  const translate = `translate(${left}px,${top}px)`;
   return {
     transform: translate,
     WebkitTransform: translate,
@@ -318,7 +316,7 @@ export function setTransform({top, left, width, height}: Position): Object {
     OTransform: translate,
     width: `${width}px`,
     height: `${height}px`,
-    position: 'absolute'
+    position: 'absolute',
   };
 }
 
