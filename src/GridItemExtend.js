@@ -115,7 +115,7 @@ export default class GridItemExtend extends React.Component {
     resizing: null,
     dragging: null,
     className: '',
-    editable: true,
+    editable: false,
   };
 
   // Helper for generating column width
@@ -365,12 +365,12 @@ export default class GridItemExtend extends React.Component {
   }
 
   onMouseEnterHandler() {
-    setTimeout(() => this.setState({ editable: true }), 500);
+    setTimeout(() => this.setState({ editable: true }), 1);
   }
 
   onMouseLeaveHandler() {
     if (this.props.isSelected) return;
-    setTimeout(() => this.setState({ editable: true }), 500);
+    setTimeout(() => this.setState({ editable: false }), 1);
   }
 
   onClickHandler(e) {
