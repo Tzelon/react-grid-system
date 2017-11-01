@@ -94,7 +94,7 @@ export default class GridItemExtend extends React.Component {
     // Selector for draggable cancel (see react-draggable)
     cancel: PropTypes.string,
     // Indicate if this item is selected
-    isSelected: PropTypes.boolean,
+    isSelected: PropTypes.bool,
     // Array of sizes that can be selected for this item
     itemSizes: PropTypes.arrayOf(PropTypes.array),
   };

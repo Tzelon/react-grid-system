@@ -91,7 +91,7 @@ export default class ShowcaseLayout extends React.Component {
 
 
   renderBoxes() {
-    return this.state.layout.map((box) => widgetFactory(box, box.data));
+    return this.state.layout.map((box) => widgetFactory(box));
   }
 
   onBreakpointChange = (breakpoint) => {

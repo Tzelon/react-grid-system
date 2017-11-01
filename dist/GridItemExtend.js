@@ -48,11 +48,11 @@ var GridItemExtend = function (_React$Component) {
     }, _this.onItemClick = function (item) {
       _this.onResizeHandler("onResize")(null, {
         node: null,
-        size: { left: 0, top: 0, width: item.value[0] * 85, height: item.value[1] * 85 }
+        size: { left: 0, top: 0, width: item.value[0] * _this.props.rowWidth, height: item.value[1] * _this.props.rowHeight }
       });
       _this.onResizeHandler("onResizeStop")(null, {
         node: null,
-        size: { left: 0, top: 0, width: item.value[0] * 85, height: item.value[1] * 85 }
+        size: { left: 0, top: 0, width: item.value[0] * _this.props.rowWidth, height: item.value[1] * _this.props.rowHeight }
       });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -325,6 +325,7 @@ var GridItemExtend = function (_React$Component) {
             if (!_this2.state.dragging) throw new Error('onDragEnd called before onDragStart.');
             newPosition.left = _this2.state.dragging.left;
             newPosition.top = _this2.state.dragging.top;
+
             _this2.setState({ dragging: null });
             break;
           default:
@@ -426,7 +427,7 @@ var GridItemExtend = function (_React$Component) {
       }, void 0, _jsx('span', {
         className: 'icon-container',
         onMouseDown: this.onMouseDownPreventDrag,
-        onClick: this.props.onRemoveItem
+        onClick: this.props.onRemoveItem.bind(this, child.key)
       }, void 0, _ref5), !isEmpty(this.props.itemSizes) && _jsx(DropdownMenu, {
         itemClick: this.onItemClick,
         className: 'icon-container'
@@ -457,7 +458,6 @@ var GridItemExtend = function (_React$Component) {
       _jsx('div', {}, this.props.children.key, React.cloneElement(React.Children.only(this.props.children), {
         itemSize: this.props.w + 'x' + this.props.h
       }));
-
       if (this.state.editable) child = this.mixinHeader(child);
 
       // Create the child element. We clone the existing element but modify its className and style.

@@ -294,7 +294,8 @@ var ReactGridLayout = function (_React$Component) {
           containerPadding = _props.containerPadding,
           rowHeight = _props.rowHeight,
           maxRows = _props.maxRows,
-          useCSSTransforms = _props.useCSSTransforms;
+          useCSSTransforms = _props.useCSSTransforms,
+          handleRemoveItem = _props.handleRemoveItem;
 
       // {...this.state.activeDrag} is pretty slow, actually
 
@@ -313,7 +314,8 @@ var ReactGridLayout = function (_React$Component) {
         rowHeight: rowHeight,
         isDraggable: false,
         isResizable: false,
-        useCSSTransforms: useCSSTransforms
+        useCSSTransforms: useCSSTransforms,
+        onRemoveItem: handleRemoveItem
       }, void 0, _ref7);
     }
 
@@ -340,7 +342,9 @@ var ReactGridLayout = function (_React$Component) {
           isResizable = _props2.isResizable,
           useCSSTransforms = _props2.useCSSTransforms,
           draggableCancel = _props2.draggableCancel,
-          draggableHandle = _props2.draggableHandle;
+          draggableHandle = _props2.draggableHandle,
+          rowWidth = _props2.rowWidth,
+          handleRemoveItem = _props2.handleRemoveItem;
       var mounted = this.state.mounted;
 
       // Parse 'static'. Any properties defined directly on the grid item will take precedence.
@@ -349,7 +353,7 @@ var ReactGridLayout = function (_React$Component) {
       var resizable = Boolean(!l.static && isResizable && (l.isResizable || l.isResizable == null));
 
       return _jsx(GridItem, {
-        containerWidth: width,
+        containerWidth: rowWidth * cols,
         cols: cols,
         margin: margin,
         containerPadding: containerPadding || margin,
@@ -367,6 +371,7 @@ var ReactGridLayout = function (_React$Component) {
         isResizable: resizable,
         useCSSTransforms: useCSSTransforms && mounted,
         usePercentages: !mounted,
+        onRemoveItem: handleRemoveItem,
         w: l.w,
         h: l.h,
         x: l.x,
@@ -377,8 +382,9 @@ var ReactGridLayout = function (_React$Component) {
         maxH: l.maxH,
         maxW: l.maxW,
         'static': l.static,
-        itemSizes: l.itemSizes
-      }, void 0, child);
+        itemSizes: l.itemSizes,
+        rowWidth: rowWidth
+      }, child.key, child);
     }
   }, {
     key: 'render',
@@ -425,6 +431,7 @@ ReactGridLayout.defaultProps = {
   onDragStop: noop,
   onResizeStart: noop,
   onResize: noop,
-  onResizeStop: noop
+  onResizeStop: noop,
+  rowWidth: 85
 };
 export default ReactGridLayout;

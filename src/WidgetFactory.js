@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import { SimpleBarChart, SimpleLineChart, SimpleLineBarAreaComposedChart, SimpleRadialBarChart } from './graphs';
 
-export const widgetFactory = (widget, data) => {
+export const widgetFactory = (widget) => {
   const props = {
     key: widget.i,
-    data: data,
+    data: widget.data,
     width: widget.w,
     height: widget.h,
     rowWidth: widget.rowWidth,
