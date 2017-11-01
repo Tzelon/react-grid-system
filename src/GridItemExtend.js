@@ -155,7 +155,12 @@ export default class GridItemExtend extends React.Component {
     if (state && state.dragging) {
       out.top = Math.round(state.dragging.top);
       out.left = Math.round(state.dragging.left);
-
+      // if(out.left / 96  - 0.2 > Math.round(out.left / 96) ) {
+      //   if((out.left / 96) % 10 < 5) {
+      //     debugger;
+      //     out.left = Math.round(out.left / 96);
+      //   }
+      // }
     }
 
     return out;
