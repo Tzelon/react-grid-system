@@ -26,7 +26,7 @@ export default class SimpleLineBarAreaComposedChart extends PureComponent {
     return (
       <div key={this.props.key} >
         <ComposedChart  width={width * this.props.rowWidth} height={height * this.props.rowHeight} data={this.props.data}
-                       margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+                       margin={{top: 25, right: 20, bottom: 20, left: 20}}>
           <XAxis dataKey="name"/>
           <YAxis />
           <Tooltip/>
