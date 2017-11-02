@@ -127,7 +127,7 @@ export default class ShowcaseLayout extends React.Component {
 
   render() {
     return (
-      <div className={this.props.showGrid ? 'grid' : ''} style={ {'background-size':`${this.props.rowWidth()}px ${this.props.rowHeight}px`}}>
+      <div className={this.props.showGrid ? 'grid-cube' : ''} style={ {'background-size':`${this.props.rowWidth()}px ${this.props.rowHeight}px`}}>
         <ReactGridLayout
           {...this.props}
           layout={this.state.widgets}
