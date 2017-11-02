@@ -14,7 +14,7 @@ import '../css/styles.css';
 const render = () => {
   ReactDOM.render(
     <div>
-      <ShowcaseLayout showGrid />
+      <ShowcaseLayout showGrid/>
     </div>,
     document.getElementById('app'),
   );
