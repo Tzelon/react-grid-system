@@ -25,11 +25,6 @@ const dataRadialBar = [
   {name: 'unknow', uv: 6.67, pv: 4800, fill: '#ffc658'}
 ];
 
-const ROW_HEIGHT = 85;
-const COLUMNS = 20;
-const MAX_ROWS = 10;
-const ROW_WIDTH =  Math.floor((window.innerWidth || document.documentElement.offsetWidth) / COLUMNS );
-
 export default class ShowcaseLayout extends React.Component {
   static propTypes = {
     onLayoutChange: PropTypes.func.isRequired,
@@ -37,21 +32,25 @@ export default class ShowcaseLayout extends React.Component {
 
   static defaultProps = {
     className: "layout",
-    rowHeight: 20,
+    rowHeight: 85,
+    columns: 20,
+    maxRows: 10,
+    rowWidth: function() {
+      return Math.floor((window.innerWidth || document.documentElement.offsetWidth) / this.columns )
+    },
     onLayoutChange: function () {
     },
     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-    showGrid: false,
+    showGrid: true,
   };
 
   state = {
     currentBreakpoint: 'xxs',
     mounted: false,
-    layout: [
-            { i: this.generateRandomKey(), x: 0, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
-            { i: this.generateRandomKey(), x: 6, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5] , data: data },
-            { i: this.generateRandomKey(), x: 11, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"LineBarArea", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: data },
-            { i: this.generateRandomKey(), x: 0, y: 5, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"RadialBar", rowWidth:ROW_WIDTH, rowHeight: ROW_HEIGHT, margin: [5, 5], data: dataRadialBar },
+    widgets: [
+            { i: this.generateRandomKey(), x: 0, y: 0, w: 5, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Line", rowWidth:this.props.rowWidth(), rowHeight: this.props.rowHeight, margin: [5, 5], data: data },
+            { i: this.generateRandomKey(), x: 6, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"Bar", rowWidth:this.props.rowWidth(), rowHeight: this.props.rowHeight, margin: [5, 5] , data: data },
+            { i: this.generateRandomKey(), x: 11, y: 0, w: 4, h: 4, itemSizes: [[5, 3], [4, 4]], type:"LineBarArea", rowWidth:this.props.rowWidth(), rowHeight: this.props.rowHeight, margin: [5, 5], data: data },
           ],
   };
 
@@ -69,6 +68,12 @@ export default class ShowcaseLayout extends React.Component {
     this.setState({ mounted: true });
   }
 
+  /**
+   * Add divs to the background that presents the grid
+   * that the widgets can be placed on.
+   * @param iHeight - row height
+   * @param iWidth - row width
+   */
   paintGrid(iHeight, iWidth) {
     const ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / iWidth ),
         ratioH = Math.floor((window.innerHeight || document.documentElement.offsetHeight) / iHeight );
@@ -91,8 +96,11 @@ export default class ShowcaseLayout extends React.Component {
 }
 
 
+  /**
+   * return array of the widgets that will be present on the page
+   */
   renderBoxes() {
-    return this.state.layout.map((box) => widgetFactory(box));
+    return this.state.widgets.map((box) => widgetFactory(box));
   }
 
   onBreakpointChange = (breakpoint) => {
@@ -105,21 +113,26 @@ export default class ShowcaseLayout extends React.Component {
     this.props.onLayoutChange(layout, layouts);
   };
 
+  /**
+   * handle delete widget:
+   * remove the widget with the current key from the list
+   * @param key
+   */
   onRemoveItem = (key) => {
-    const filterdLayoutsList = this.state.layout.filter(widget => widget.i !== key);
-    this.setState({layout: filterdLayoutsList });
+    const filterdLayoutsList = this.state.widgets.filter(widget => widget.i !== key);
+    this.setState({widgets: filterdLayoutsList });
   };
 
   render() {
     if(this.props.showGrid) {
-      this.paintGrid(ROW_HEIGHT, ROW_WIDTH);
+      this.paintGrid(this.props.rowHeight, this.props.rowWidth());
     }
 
     return (
       <div>
         <ReactGridLayout
           {...this.props}
-          layout={this.state.layout}
+          layout={this.state.widgets}
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
           // WidthProvider option
@@ -127,12 +140,12 @@ export default class ShowcaseLayout extends React.Component {
           // useCSSTransforms={false}
           verticalCompact={false}
           margin={[0, 0]}
-          rowHeight={ROW_HEIGHT}
-          rowWidth={ROW_WIDTH}
+          rowHeight={this.props.rowHeight}
+          rowWidth={this.props.rowWidth()}
           isResizable={false}
           autoSize={false}
-          maxRows={MAX_ROWS}
-          cols={COLUMNS}
+          maxRows={this.props.maxRows}
+          cols={this.props.columns}
           handleRemoveItem = {this.onRemoveItem.bind(this)}
         >
         {this.renderBoxes()}
