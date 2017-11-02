@@ -54,6 +54,9 @@ export default class ReactGridLayout extends React.Component {
     // If true, the layout will compact vertically
     verticalCompact: PropTypes.bool,
 
+    // If true, show grid - default is false
+    grid: PropTypes.bool,
+
     // layout is an array of object with the format:
     // {x: Number, y: Number, w: Number, h: Number, i: String}
     layout: function (props) {
@@ -148,6 +151,7 @@ export default class ReactGridLayout extends React.Component {
     onResize: noop,
     onResizeStop: noop,
     rowWidth: 85,
+    grid: false,
   };
 
   state: State = {
@@ -439,6 +443,7 @@ export default class ReactGridLayout extends React.Component {
       </GridItem>
     );
   }
+
 
   render() {
     const {className, style} = this.props;

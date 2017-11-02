@@ -1,15 +1,14 @@
 import React, { PureComponent } from 'react';
 import { SimpleBarChart, SimpleLineChart, SimpleLineBarAreaComposedChart, SimpleRadialBarChart } from './graphs';
 
-export const widgetFactory = (widget) => {
+export const widgetFactory = (widget, size) => {
   const props = {
     key: widget.i,
     data: widget.data,
     width: widget.w,
     height: widget.h,
-    rowWidth: widget.rowWidth,
-    rowHeight: widget.rowHeight,
-    margin: widget.margin[0],
+    rowWidth: size.width,
+    rowHeight: size.height,
   };
 
   switch (widget.type) {

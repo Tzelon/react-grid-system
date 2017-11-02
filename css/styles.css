@@ -82,6 +82,11 @@
   user-select: none;
 }
 
+.grid {
+  background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+  height:100%;
+}
+
 .react-grid-item > .react-resizable-handle {
   position: absolute;
   width: 20px;

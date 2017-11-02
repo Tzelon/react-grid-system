@@ -14,20 +14,15 @@ const data = [
   { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
 ];
 
-
-const dataRadialBar = [
-  { name: '18-24', uv: 31.47, pv: 2400, fill: '#8884d8' },
-  { name: '25-29', uv: 26.69, pv: 4567, fill: '#83a6ed' },
-  { name: '30-34', uv: 15.69, pv: 1398, fill: '#8dd1e1' },
-  { name: '35-39', uv: 8.22, pv: 9800, fill: '#82ca9d' },
-  { name: '40-49', uv: 8.63, pv: 3908, fill: '#a4de6c' },
-  { name: '50+', uv: 2.63, pv: 4800, fill: '#d0ed57' },
-  { name: 'unknow', uv: 6.67, pv: 4800, fill: '#ffc658' },
-];
-
 export default class ShowcaseLayout extends React.Component {
   static propTypes = {
     onLayoutChange: PropTypes.func.isRequired,
+    rowHeight: PropTypes.number,
+    rowWidth: PropTypes.func,
+    showGrid: PropTypes.bool,
+    className: PropTypes.string,
+    columns:  PropTypes.number,
+    cols: PropTypes.object,
   };
 
   static defaultProps = {
@@ -52,13 +47,10 @@ export default class ShowcaseLayout extends React.Component {
         i: this.generateRandomKey(),
         x: 0,
         y: 0,
-        w: 5,
+        w: 4,
         h: 4,
         itemSizes: [[5, 3], [4, 4]],
         type: "Line",
-        rowWidth: this.props.rowWidth(),
-        rowHeight: this.props.rowHeight,
-        margin: [5, 5],
         data: data,
       },
       {
@@ -69,9 +61,6 @@ export default class ShowcaseLayout extends React.Component {
         h: 4,
         itemSizes: [[5, 3], [4, 4]],
         type: "Bar",
-        rowWidth: this.props.rowWidth(),
-        rowHeight: this.props.rowHeight,
-        margin: [5, 5],
         data: data,
       },
       {
@@ -82,13 +71,12 @@ export default class ShowcaseLayout extends React.Component {
         h: 4,
         itemSizes: [[5, 3], [4, 4]],
         type: "LineBarArea",
-        rowWidth: this.props.rowWidth(),
-        rowHeight: this.props.rowHeight,
-        margin: [5, 5],
         data: data,
       },
     ],
   };
+
+
 
   /**
    * 52(chars) for 4 number = a lot... :-)
@@ -104,39 +92,17 @@ export default class ShowcaseLayout extends React.Component {
     this.setState({ mounted: true });
   }
 
-  /**
-   * Add divs to the background that presents the grid
-   * that the widgets can be placed on.
-   * @param iHeight - row height
-   * @param iWidth - row width
-   */
-  paintGrid(iHeight, iWidth) {
-    const ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / iWidth),
-      ratioH = Math.floor((window.innerHeight || document.documentElement.offsetHeight) / iHeight);
-
-    const parent = document.createElement('div');
-    parent.className = 'grid';
-    parent.style.width = (ratioW * iWidth) + 'px';
-    parent.style.height = (ratioH * iHeight) + 'px';
-
-    for (let i = 0; i < ratioH; i++) {
-      for (let p = 0; p < ratioW; p++) {
-        const cell = document.createElement('div');
-        cell.style.height = (iHeight - 1) + 'px';
-        cell.style.width = (iWidth - 1) + 'px';
-        parent.appendChild(cell);
-      }
-    }
-
-    document.body.appendChild(parent);
-  }
 
 
   /**
    * return array of the widgets that will be present on the page
    */
   renderBoxes() {
-    return this.state.widgets.map((box) => widgetFactory(box));
+    const size = {
+      height: this.props.rowHeight,
+      width: this.props.rowWidth()
+    };
+    return this.state.widgets.map((box) => widgetFactory(box, size));
   }
 
   onBreakpointChange = (breakpoint) => {
@@ -160,12 +126,8 @@ export default class ShowcaseLayout extends React.Component {
   };
 
   render() {
-    if (this.props.showGrid) {
-      this.paintGrid(this.props.rowHeight, this.props.rowWidth());
-    }
-
     return (
-      <div>
+      <div className={this.props.showGrid ? 'grid' : ''} style={ {'background-size':`${this.props.rowWidth()}px ${this.props.rowHeight}px`}}>
         <ReactGridLayout
           {...this.props}
           layout={this.state.widgets}
