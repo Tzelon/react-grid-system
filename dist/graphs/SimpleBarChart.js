@@ -69,7 +69,7 @@ var SimpleBarChart = function (_PureComponent) {
         width: width * this.props.rowWidth,
         height: height * this.props.rowHeight,
         data: this.props.data,
-        margin: { top: 5, right: 30, left: 20, bottom: 5 }
+        margin: { top: 25, right: 30, left: 20, bottom: 5 }
       }, void 0, _ref, _ref2, _ref3, _ref4, _ref5, _ref6, _jsx(Bar, {
         dataKey: 'uv',
         fill: '#82ca9d',

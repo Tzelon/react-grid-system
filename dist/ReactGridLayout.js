@@ -432,6 +432,7 @@ ReactGridLayout.defaultProps = {
   onResizeStart: noop,
   onResize: noop,
   onResizeStop: noop,
-  rowWidth: 85
+  rowWidth: 85,
+  grid: false
 };
 export default ReactGridLayout;

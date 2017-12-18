@@ -394,7 +394,7 @@ var GridItemExtend = function (_React$Component) {
 
       setTimeout(function () {
         return _this4.setState({ editable: true });
-      }, 500);
+      }, 1);
     }
   }, {
     key: 'onMouseLeaveHandler',
@@ -404,7 +404,7 @@ var GridItemExtend = function (_React$Component) {
       if (this.props.isSelected) return;
       setTimeout(function () {
         return _this5.setState({ editable: true });
-      }, 500);
+      }, 1);
     }
   }, {
     key: 'onClickHandler',

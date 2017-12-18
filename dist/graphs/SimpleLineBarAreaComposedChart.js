@@ -80,7 +80,7 @@ var SimpleLineBarAreaComposedChart = function (_PureComponent) {
         width: width * this.props.rowWidth,
         height: height * this.props.rowHeight,
         data: this.props.data,
-        margin: { top: 20, right: 20, bottom: 20, left: 20 }
+        margin: { top: 25, right: 20, bottom: 20, left: 20 }
       }, void 0, _ref, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8));
     }
   }]);
