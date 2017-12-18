@@ -3,7 +3,7 @@ var _jsx = function () { var REACT_ELEMENT_TYPE = typeof Symbol === "function" &
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _templateObject = _taggedTemplateLiteral(['\n  & {\n    cursor: pointer;\n    position: relative;\n  }\n'], ['\n  & {\n    cursor: pointer;\n    position: relative;\n  }\n']),
-    _templateObject2 = _taggedTemplateLiteral(['\n  & {\n    display: flex;\n    justify-content: space-between;\n    cursor: pointer;\n    position: relative;\n    list-style: none;\n    background-color: #ccccee;\n    width: 150px;\n    padding: 10px 25px;\n\n    :hover {\n      background-color: grey;\n    }\n  }\n'], ['\n  & {\n    display: flex;\n    justify-content: space-between;\n    cursor: pointer;\n    position: relative;\n    list-style: none;\n    background-color: #ccccee;\n    width: 150px;\n    padding: 10px 25px;\n\n    :hover {\n      background-color: grey;\n    }\n  }\n']),
+    _templateObject2 = _taggedTemplateLiteral(['\n  & {\n    display: flex;\n    justify-content: space-between;\n    cursor: pointer;\n    position: relative;\n    list-style: none;\n    background-color: #ccccee;\n    width: 150px;\n    padding: 10px 25px;\n\n    :hover {\n      background-color: grey;\n    }\n  }\n\n  &.selected {\n    background-color: darkblue;\n  }\n'], ['\n  & {\n    display: flex;\n    justify-content: space-between;\n    cursor: pointer;\n    position: relative;\n    list-style: none;\n    background-color: #ccccee;\n    width: 150px;\n    padding: 10px 25px;\n\n    :hover {\n      background-color: grey;\n    }\n  }\n\n  &.selected {\n    background-color: darkblue;\n  }\n']),
     _templateObject3 = _taggedTemplateLiteral(['\n  & {\n    display: none;\n    cursor: pointer;\n    position: fixed;\n    z-index: 9999;\n    margin: 0;\n    padding: 0;\n  }\n    \n  ', '\n'], ['\n  & {\n    display: none;\n    cursor: pointer;\n    position: fixed;\n    z-index: 9999;\n    margin: 0;\n    padding: 0;\n  }\n    \n  ', '\n']),
     _templateObject4 = _taggedTemplateLiteral(['\n  & {\n    display: block;\n  }\n'], ['\n  & {\n    display: block;\n  }\n']);
 
@@ -28,7 +28,7 @@ export var ListItem = styled('li')(_templateObject2);
 
 //language=SCSS
 var ListContainer = styled('ul')(_templateObject3, function (props) {
-    return props.show && css(_templateObject4);
+  return props.show && css(_templateObject4);
 });
 
 var _ref3 = _jsx('handler', {});
@@ -36,58 +36,60 @@ var _ref3 = _jsx('handler', {});
 var _ref4 = _jsx(DotsHorizontal, {});
 
 var DropdownMenu = function (_Component) {
-    _inherits(DropdownMenu, _Component);
+  _inherits(DropdownMenu, _Component);
 
-    function DropdownMenu() {
-        var _ref;
+  function DropdownMenu() {
+    var _ref;
 
-        var _temp, _this, _ret;
+    var _temp, _this, _ret;
 
-        _classCallCheck(this, DropdownMenu);
+    _classCallCheck(this, DropdownMenu);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            isOpen: false
-        }, _this.handleChange = function (_ref2) {
-            var _ref2$props = _ref2.props,
-                name = _ref2$props.name,
-                value = _ref2$props.value;
-
-            _this.props.itemClick({ name: name, value: value });
-        }, _this.onToggleShow = function () {
-            _this.setState({ isOpen: !_this.state.isOpen });
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    _createClass(DropdownMenu, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      isOpen: false
+    }, _this.handleChange = function (_ref2) {
+      var _ref2$props = _ref2.props,
+          name = _ref2$props.name,
+          value = _ref2$props.value;
 
-            var _props = this.props,
-                className = _props.className,
-                handler = _props.handler,
-                children = _props.children;
+      _this.props.itemClick({ name: name, value: value });
+      _this.setState({ selected: name });
+    }, _this.onToggleShow = function () {
+      _this.setState({ isOpen: !_this.state.isOpen });
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
 
-            return _jsx(Container, {
-                className: className,
-                onClick: this.onToggleShow
-            }, void 0, handler ? _ref3 : _ref4, _jsx(ListContainer, {
-                show: this.state.isOpen
-            }, void 0, React.Children.map(children, function (child) {
-                return React.cloneElement(child, {
-                    onClick: function onClick() {
-                        return _this2.handleChange(child);
-                    }
-                });
-            })));
-        }
-    }]);
+  _createClass(DropdownMenu, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-    return DropdownMenu;
+      var _props = this.props,
+          className = _props.className,
+          handler = _props.handler,
+          children = _props.children;
+
+      return _jsx(Container, {
+        className: className,
+        onClick: this.onToggleShow
+      }, void 0, handler ? _ref3 : _ref4, _jsx(ListContainer, {
+        show: this.state.isOpen
+      }, void 0, React.Children.map(children, function (child) {
+        return React.cloneElement(child, {
+          onClick: function onClick() {
+            return _this2.handleChange(child);
+          },
+          className: _this2.state.selected === child.key ? 'selected' : null
+        });
+      })));
+    }
+  }]);
+
+  return DropdownMenu;
 }(Component);
 
 export default DropdownMenu;

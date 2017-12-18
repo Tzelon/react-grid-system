@@ -28,6 +28,10 @@ export const ListItem = styled('li')`
       background-color: grey;
     }
   }
+
+  &.selected {
+    background-color: darkblue;
+  }
 `;
 
 //language=SCSS
@@ -49,41 +53,43 @@ const ListContainer = styled('ul')`
 `;
 
 export default class DropdownMenu extends Component {
-    static propTypes: {
-        handler: PropTypes.element,
-        children: PropTypes.object,
-        itemClick: PropTypes.func,
-        options: PropTypes.any.isRequired,
-        active: PropTypes.any.isRequired,
-        onChange: PropTypes.func.isRequired,
-        className: PropTypes.string
-    };
+  static propTypes: {
+    handler: PropTypes.element,
+    children: PropTypes.object,
+    itemClick: PropTypes.func,
+    options: PropTypes.any.isRequired,
+    active: PropTypes.any.isRequired,
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string
+  };
 
-    state = {
-        isOpen: false,
-    };
+  state = {
+    isOpen: false,
+  };
 
-    handleChange = ({props: {name, value}}) => {
-       this.props.itemClick({name, value});
-    };
+  handleChange = ({ props: { name, value } }) => {
+    this.props.itemClick({ name, value });
+    this.setState({ selected: name });
+  };
 
-    onToggleShow = () => {
-        this.setState({ isOpen: !this.state.isOpen });
-    };
+  onToggleShow = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
 
-    render() {
-        const { className, handler, children } = this.props;
-        return (
-            <Container className={className} onClick={this.onToggleShow} >
-                {handler ? <handler/> : <DotsHorizontal/>}
-                <ListContainer show={this.state.isOpen} >
-                    {
-                        React.Children.map(children, (child) => React.cloneElement(child, {
-                            onClick: () => this.handleChange(child),
-                        }))
-                    }
-                </ListContainer>
-            </Container>
-        );
-    }
+  render() {
+    const { className, handler, children } = this.props;
+    return (
+      <Container className={className} onClick={this.onToggleShow}>
+        {handler ? <handler /> : <DotsHorizontal />}
+        <ListContainer show={this.state.isOpen}>
+          {
+            React.Children.map(children, (child) => React.cloneElement(child, {
+              onClick: () => this.handleChange(child),
+              className: this.state.selected === child.key ? 'selected' : null,
+            }))
+          }
+        </ListContainer>
+      </Container>
+    );
+  }
 }
