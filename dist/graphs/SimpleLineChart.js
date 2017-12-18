@@ -61,7 +61,7 @@ var SimpleLineChart = function (_PureComponent) {
         width: width * this.props.rowWidth,
         height: height * this.props.rowHeight,
         data: this.props.data,
-        margin: { top: 20, right: 30, left: 20, bottom: 5 }
+        margin: { top: 25, right: 30, left: 20, bottom: 5 }
       }, void 0, _ref, _ref2, _ref3, _jsx(Line, {
         type: 'monotone',
         dataKey: 'pv',
