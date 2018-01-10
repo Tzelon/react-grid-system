@@ -1,6 +1,6 @@
 {
   "name": "react-layout-system",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "react-layout-system",
   "main": "./index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "keywords": [
     "kit"
   ],
-  "author": "Tzelon Machluf",
+  "author": "Nadav Gabay, Tzelon Machluf",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Tzelon/react-layout-system/issues"

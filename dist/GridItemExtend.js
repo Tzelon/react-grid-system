@@ -238,7 +238,7 @@ var GridItemExtend = function (_React$Component) {
         onDrag: this.onDragHandler('onDrag'),
         onStop: this.onDragHandler('onDragStop'),
         handle: this.props.handle,
-        cancel: ".react-resizable-handle" + (this.props.cancel ? "," + this.props.cancel : "")
+        cancel: ".react-resizable-handle, .only-header-draggable-widget" + (this.props.cancel ? "," + this.props.cancel : "")
       }, void 0, child);
     }
 
